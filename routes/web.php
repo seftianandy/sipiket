@@ -11,7 +11,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\JamPelajaranController;
 use App\Http\Controllers\GuruController;
-use App\Http\Controllers\WaliKelasController;
+use App\Http\Controllers\RombonganBelajarController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\JadwalPelajaranController;
@@ -29,17 +29,23 @@ Route::get('/kelas', [KelasController::class, 'index']);
 Route::get('/kelas/import-view', [KelasController::class, 'create']);
 
 Route::get('/mata-pelajaran', [MapelController::class, 'index']);
-Route::get('/mata-pelajaran/detil/{id}', [MapelController::class, 'show']);
-Route::get('/mata-pelajaran/import-view', [MapelController::class, 'create']);
+Route::post('/mata-pelajaran/store', [MapelController::class, 'store']);
+Route::delete('/mata-pelajaran/delete/{id}', [MapelController::class, 'destroy']);
+// Route::get('/mata-pelajaran/detil', [MapelController::class, 'show']);
+// Route::get('/mata-pelajaran/import-view', [MapelController::class, 'create']);
 
 Route::get('/jam-pelajaran', [JamPelajaranController::class, 'index']);
 Route::get('/jam-pelajaran/import-view', [JamPelajaranController::class, 'create']);
 
-Route::get('/guru', [GuruController::class, 'index']);
-Route::get('/guru/import-view', [GuruController::class, 'create']);
+Route::get('/gtk', [GuruController::class, 'index']);
+Route::get('/gtk/read', [GuruController::class, 'read']);
+Route::get('/gtk/import-view', [GuruController::class, 'create']);
 
-Route::get('/wali-kelas', [WaliKelasController::class, 'index']);
-Route::get('/wali-kelas/import-view', [WaliKelasController::class, 'create']);
+Route::get('/rombongan-belajar', [RombonganBelajarController::class, 'index']);
+Route::post('/rombongan-belajar', [RombonganBelajarController::class, 'store']);
+Route::delete('/rombongan-belajar/{id}', [RombonganBelajarController::class, 'destroy']);
+Route::get('/anggota-rombel/{id}', [RombonganBelajarController::class, 'show']);
+Route::put('/rombongan-belajar/testing/{id}', [RombonganBelajarController::class, 'testing']);
 
 Route::get('/tahun-ajaran', [TahunAjaranController::class, 'index']);
 Route::get('/tahun-ajaran/import-view', [TahunAjaranController::class, 'create']);
@@ -51,7 +57,8 @@ Route::get('/absensi/datariwayatabsensi', [AbsensiController::class, 'datariwaya
 Route::get('/absensi/datatigahari', [AbsensiController::class, 'datatigahari']);
 
 Route::get('/jadwal-pelajaran', [JadwalPelajaranController::class, 'index']);
-Route::get('/jadwal-pelajaran/import-view', [JadwalPelajaranController::class, 'create']);
+Route::post('/jadwal-pelajaran', [JadwalPelajaranController::class, 'store']);
+Route::delete('/jadwal-pelajaran/{id}', [JadwalPelajaranController::class, 'destroy']);
 
 // Route::get('/', [KelasController::class, 'index']);
 Route::get('/read', [KelassController::class, 'read']);

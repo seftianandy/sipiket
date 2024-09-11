@@ -21,7 +21,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header" id="imporPdHeader">
-                <button type="button" class="btn btn-md btn-success" data-toggle="modal" data-target="#modal-importtahunajaran"
+                <button type="button" class="btn btn-md btn-dark" data-toggle="modal" data-target="#modal-importtahunajaran"
                     onclick="viewimport()">
                     <i class="fas fa-file-import"></i>&nbsp; Tambah Tahun Ajaran
                 </button>
@@ -31,20 +31,24 @@
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th class="text-center">KODEz</th>
                             <th class="text-center">TAHUN AJARAN</th>
                             <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($data as $item )
                         <tr>
-                            <td class="text-center">TAHUN AJARAN</td>
+                            <td class="text-center">{{$item->nama}}</td>
+                            <td class="text-center">{{$item->description}}</td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="nonactivepd('1', 'seftian')">
+                                    onclick="nonactivepd({{$item->id}}, {{$item->description}})">
                                     <i class="fas fa-times-circle"></i>&nbsp; Nonaktifkan
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -79,87 +83,25 @@
 <!-- /.modal -->
 @stop
 
-    @push('js')
-        <!-- DataTables  & Plugins -->
-        <script src="{{ asset('adminlte') }}/plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="{{ asset('adminlte') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js">
-        </script>
-        <script
-            src="{{ asset('adminlte') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js">
-        </script>
-        <script
-            src="{{ asset('adminlte') }}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js">
-        </script>
-        <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js">
-        </script>
-        <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js">
-        </script>
-        <script src="{{ asset('adminlte') }}/plugins/jszip/jszip.min.js"></script>
-        <script src="{{ asset('adminlte') }}/plugins/pdfmake/pdfmake.min.js"></script>
-        <script src="{{ asset('adminlte') }}/plugins/pdfmake/vfs_fonts.js"></script>
-        <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.html5.min.js">
-        </script>
-        <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.print.min.js">
-        </script>
-        <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.colVis.min.js">
-        </script>
+@push('js')
+    <!-- DataTables  & Plugins -->
+    <script src="{{ asset('adminlte') }}/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js">
+    </script>
+    <script
+        src="{{ asset('adminlte') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js">
+    </script>
+    <script
+        src="{{ asset('adminlte') }}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js">
+    </script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js">
+    </script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js">
+    </script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.html5.min.js">
+    </script>
 
-        <!-- SweetAlert2 -->
-        <script src="{{ asset('adminlte') }}/plugins/sweetalert2/sweetalert2.min.js"></script>
-    @endpush
-
-    @push('script')
-        <script>
-            $(function () {
-                $("#example1").DataTable({
-                    "responsive": true,
-                    "lengthChange": false,
-                    "autoWidth": false,
-                    "buttons": ["csv", "excel", "pdf", "print"]
-                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            });
-
-            function viewimport() {
-                $.get("{{ url('tahun-ajaran/import-view') }}", {}, function (data, status) {
-                    $("#import-view").html(data)
-                })
-            }
-
-            function nonactivepd(id, nama) {
-                const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: "btn btn-success",
-                        cancelButton: "btn btn-danger"
-                    },
-                    buttonsStyling: true
-                });
-                swalWithBootstrapButtons.fire({
-                    title: "Nonaktifkan Tahun Ajaran <span class='text-danger'>" + nama + "</span> ?",
-                    text: "Data Tahun Ajaran akan dinonaktifkan !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, Nonaktifkan!",
-                    cancelButtonText: "No, Batalkan!",
-                    reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        swalWithBootstrapButtons.fire({
-                            title: "Berhasil!",
-                            text: "Tahun Ajaran " + nama + " berhasil dinonaktifkan.",
-                            icon: "success"
-                        });
-                    } else if (
-                        /* Read more about handling dismissals below */
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire({
-                            title: "Dibatalkan",
-                            text: "Data tidak diproses.",
-                            icon: "error"
-                        });
-                    }
-                });
-            }
-
-        </script>
-    @endpush
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('adminlte') }}/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{ asset('assets') }}/tahun-ajaran/tahun-ajaran.js"></script>
+@endpush

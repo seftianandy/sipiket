@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-'pageTitle' => 'Mata Pelajaran'
+'pageTitle' => 'Rombongan Belajar'
 ])
 
 @push('css')
@@ -32,9 +32,9 @@
                 </div>
             @endif
             <div class="card-header" id="imporPdHeader">
-                <button type="button" class="btn btn-md btn-dark" data-toggle="modal" data-target="#modal-importmapel"
+                <button type="button" class="btn btn-md btn-dark" data-toggle="modal" data-target="#modal-rombel"
                     onclick="viewimport()">
-                    <i class="fas fa-plus"></i>&nbsp; Tambah Mata Pelajaran
+                    <i class="fas fa-plus"></i>&nbsp; Tambah Rombongan Belajar
                 </button>
             </div>
             <!-- /.card-header -->
@@ -42,25 +42,30 @@
                 <table id="example1" class="table table-bordered table-striped">
                     <thead class="bg-dark">
                         <tr>
-                            <th class="text-center">KODE</th>
-                            <th class="text-center">MATA PELAJARAN</th>
-                            <th class="text-center">GURU PENGAMPU</th>
+                            <th class="text-center">ROMBEL</th>
+                            <th class="text-center">WALI KELAS</th>
+                            <th class="text-center">JURUSAN</th>
+                            <th class="text-center">TINGKAT</th>
                             <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($data as $item)
-                            <tr>
-                                <td>{{ $item->mata_pelajaran }}</td>
-                                <td>{{ $item->description }}</td>
-                                <td>{{ $item->guru->nama }}</td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-sm btn-danger"
-                                        onclick="hapus({{ $item->id }}, '{{ $item->mata_pelajaran }}')">
-                                        <i class="fas fa-times-circle"></i>&nbsp; Hapus
-                                    </button>
-                                </td>
-                            </tr>
+                        @foreach ($data as $item)
+                        <tr>
+                            <td>{{$item->nama}}</td>
+                            <td>{{$item->guru->nama}}</td>
+                            <td>{{$item->jurusan->description}}</td>
+                            <td class="text-center">{{$item->tingkat}}</td>
+                            <td class="text-center">
+                                <a href="anggota-rombel/{{$item->id}}" class="btn btn-sm btn-default">
+                                    <i class="fas fa-users"></i>&nbsp; Anggota Rombel
+                                </a>
+                                <button type="button" class="btn btn-sm btn-danger"
+                                    onclick="hapus({{$item->id}}, '{{$item->nama}}')">
+                                    <i class="fas fa-times-circle"></i>&nbsp; Hapus
+                                </button>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -71,41 +76,58 @@
     </div>
 </div>
 
-<!-- Tambah Mata Pelajaran -->
-<div class="modal fade" id="modal-importmapel">
+<!-- Import Data Guru -->
+<div class="modal fade" id="modal-rombel">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <!-- form start -->
-            <form class="form-horizontal" method="POST" action="/mata-pelajaran/store">
+            <form class="form-horizontal" method="POST" action="/rombongan-belajar">
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Mata Pelajaran</h4>
+                    <h4 class="modal-title">Tambah Rombongan Belajar</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body" id="import-view">
+                    <input type="hidden" name="semester_id" class="form-control" value="1">
                     <div class="form-group row">
-                        <label for="data-siswa" class="col-sm-3 col-form-label">KODE</label>
+                        <label for="nama" class="col-sm-3 col-form-label">ROMBEL</label>
                         <div class="col-sm-9">
-                            <input type="text" name="mata_pelajaran" class="form-control"
-                                placeholder="Masukkan Kode Mata Pelajaran">
+                            <input type="text" name="nama" class="form-control"
+                                placeholder="Masukkan Nama Rombongan Belajar">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="data-siswa" class="col-sm-3 col-form-label">NAMA</label>
+                        <label for="jurusan_id" class="col-sm-3 col-form-label">JURUSAN</label>
                         <div class="col-sm-9">
-                            <input type="nama" name="description" class="form-control"
-                                placeholder="Masukkan Nama Mata Pelajaran">
+                            <select name="jurusan_id" class="form-control select2">
+                                <option value="">-- PILIH JURUSAN</option>
+                                @foreach ($jurusan as $jurusans)
+                                <option value="{{$jurusans->id}}">{{$jurusans->description}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="data-siswa" class="col-sm-3 col-form-label">GURU PENGAMPU</label>
+                        <label for="tingkat" class="col-sm-3 col-form-label">TINGKAT</label>
                         <div class="col-sm-9">
-                            <select name="guru_id" class="form-control select2">
-                                <option value="">-- PILIH GURU PENGAMPU</option>
-                                @foreach($guru as $gurus)
-                                    <option value="{{ $gurus->id }}"> {{ $gurus->nama }}</option>
+                            <select name="tingkat" class="form-control">
+                                <option value="">-- PILIH TINGKAT</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="guru_id" class="col-sm-3 col-form-label">WALI KELAS</label>
+                        <div class="col-sm-9">
+                            <select name="guru_id" class="form-control select3">
+                                <option value="">-- PILIH WALI KELAS</option>
+                                @foreach ($guru as $walikelas)
+                                <option value="{{$walikelas->id}}">{{$walikelas->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -164,9 +186,6 @@
                 $("#success-alert").fadeOut('slow');
             }, 2000); // 2000 ms = 2 detik
         })
-        $('.select2').select2({
-            theme: 'bootstrap4'
-        })
 
         $(function () {
             $("#example1").DataTable({
@@ -176,6 +195,14 @@
                 "buttons": ["csv", "excel", "pdf", "print"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
+
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
+
+        $('.select3').select2({
+            theme: 'bootstrap4'
+        })
 
         function hapus(id, nama) {
             const swalWithBootstrapButtons = Swal.mixin({
@@ -187,8 +214,8 @@
             });
 
             swalWithBootstrapButtons.fire({
-                title: "Hapus mata pelajaran <span class='text-danger'>" + nama + "</span> ?",
-                text: "Data mata pelajaran akan dihapus!",
+                title: "Hapus Rombongan Belajar <span class='text-danger'>" + nama + "</span> ?",
+                text: "Data rombongan belajar akan dihapus!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Yes, Hapus!",
@@ -198,7 +225,7 @@
                 if (result.isConfirmed) {
                     // AJAX request to delete the data
                     $.ajax({
-                        url: '/mata-pelajaran/delete/' + id, // URL menuju route destroy
+                        url: '/rombongan-belajar/' + id, // URL menuju route destroy
                         type: 'DELETE',
                         data: {
                             _token: $('meta[name="csrf-token"]').attr(
@@ -207,7 +234,7 @@
                         success: function (response) {
                             swalWithBootstrapButtons.fire({
                                 title: "Berhasil!",
-                                text: "Mata Pelajaran " + nama + " berhasil dihapus.",
+                                text: "Rombongan belajar " + nama + " berhasil dihapus.",
                                 icon: "success"
                             }).then(() => {
                                 location

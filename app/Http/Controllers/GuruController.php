@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Guru;
 
 class GuruController extends Controller
 {
@@ -17,6 +18,15 @@ class GuruController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+     public function read()
+     {
+        $data = Guru::all();
+        return view('content.guru.read')->with([
+            'data' => $data
+        ]);
+     }
+
     public function create()
     {
         return view('content.guru.import');

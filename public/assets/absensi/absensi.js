@@ -1,9 +1,5 @@
 $(document).ready(function () {
-    viewabsensi()
-    viewriwayat()
-    viewtigahari()
-
-    $("#example1").DataTable();
+    $("#absensi").DataTable();
 
     //Initialize Select2 Elements
     $('.select2').select2()
@@ -21,6 +17,10 @@ $(document).ready(function () {
         theme: 'bootstrap4'
     })
 
+    //Reload page
+    $('#reload').on('click', function(){
+        location.reload()
+    })
     //Date range picker
     $('#reservation').daterangepicker()
 
@@ -41,11 +41,11 @@ $(document).ready(function () {
     });
 })
 
-function viewabsensi() {
-    $.get("absensi/dataabsensi", {}, function (data, status) {
-        $("#custom-tabs-absensi").html(data)
-    })
-}
+// function viewabsensi() {
+//     $.get("absensi/dataabsensi", {}, function (data, status) {
+//         $("#custom-tabs-absensi").html(data)
+//     })
+// }
 
 function viewriwayat() {
     $.get("absensi/datariwayatabsensi", {}, function (data, status) {

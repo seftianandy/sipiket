@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\PesertaDidik;
 
 class PdController extends Controller
 {
@@ -11,7 +12,8 @@ class PdController extends Controller
      */
     public function index()
     {
-        return view('content.pd.index');
+        $data = PesertaDidik::all();
+        return view('content.pd.index', compact('data'));
     }
 
     /**

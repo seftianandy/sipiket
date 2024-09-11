@@ -25,7 +25,7 @@
 @section('content')
 <div class="row" style="margin-bottom: 2em;">
     <div class="col-12">
-        <button type="button" class="btn btn-md btn-secondary">
+        <button type="button" class="btn btn-md btn-secondary" id="reload">
             <i class="fas fa-sync"></i>&nbsp; Reload Data
         </button>
         <button type="button" class="btn btn-md btn-dark" data-toggle="modal"
@@ -61,15 +61,204 @@
                 <div class="tab-content" id="custom-tabs-one-tabContent">
                     <div class="tab-pane fade show active" id="custom-tabs-absensi" role="tabpanel"
                         aria-labelledby="absensi-tab">
-
+                        <table id="absensi" class="table table-bordered table-sm" id="absensi">
+                            <thead class="bg-navy">
+                                <tr>
+                                    <th class="text-center">DATA SISWA</th>
+                                    <th class="text-center">KELAS</th>
+                                    <th class="text-center">MATA PELAJARAN</th>
+                                    <th class="text-center">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="vertical-align: middle;">
+                                        Nama : <br>
+                                        NISN : <br>
+                                        NIS : <br>
+                                        Jenis Kelaim : <br>
+                                        Hp/Telp :
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">KELAS</td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        mata pelajaran <br>
+                                        guru pengampu <br>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input custom-control-input-danger" type="radio" id="sakit" name="absensi">
+                                                <label for="sakit" class="custom-control-label">Sakit</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input custom-control-input-danger" type="radio" id="ijin" name="absensi">
+                                                <label for="ijin" class="custom-control-label">Ijin</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input custom-control-input-danger" type="radio" id="alfa" name="absensi">
+                                                <label for="alfa" class="custom-control-label">Alfa</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="tab-pane fade" id="custom-tabs-riwayat" role="tabpanel"
                         aria-labelledby="riwayat-tab">
-
+                        <form style="margin-bottom: 3em;">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="jamPelajaran">Tanggal</label>
+                                        <input type="date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="kelasFilter">Kelas</label>
+                                        <select class="form-control select2bs42" name="kelasfilter" id="kelasFilter">
+                                            <option value="all">Semua Kelas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="namaFilter">Nama Siswa</label>
+                                        <select class="form-control select2bs43" name="namafilter" id="namaFilter">
+                                            <option value="all">Semua Siswa</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button class="btn bg-navy">
+                                        <i class="fas fa-filter"></i> Filter Data
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <h3>Data Absen Siswa</h3>
+                        <table id="example1" class="table table-bordered table-sm">
+                            <thead class="bg-navy">
+                                <tr>
+                                    <th class="text-center">DATA SISWA</th>
+                                    <th class="text-center">KELAS</th>
+                                    <th class="text-center">MATA PELAJARAN</th>
+                                    <th class="text-center">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="vertical-align: middle;">
+                                        Nama : <br>
+                                        NISN : <br>
+                                        NIS : <br>
+                                        Jenis Kelaim : <br>
+                                        Hp/Telp :
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">KELAS</td>
+                                    <td class="text-center" style="vertical-align: middle;">MATA PELAJARAN</td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input custom-control-input-danger" type="radio" id="sakit" name="absensi">
+                                                <label for="sakit" class="custom-control-label">Sakit</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input custom-control-input-danger" type="radio" id="ijin" name="absensi">
+                                                <label for="ijin" class="custom-control-label">Ijin</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input custom-control-input-danger" type="radio" id="alfa" name="absensi">
+                                                <label for="alfa" class="custom-control-label">Alfa</label>
+                                            </div>
+                                            <br>
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="fas fa-window-close"></i>
+                                                Batalkan
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="tab-pane fade" id="custom-tabs-tigahari" role="tabpanel"
                         aria-labelledby="tigahari-tab">
-                        
+                        <form style="margin-bottom: 3em;">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="kelasFilter">Kelas</label>
+                                        <select class="form-control select2bs42" name="kelasfilter" id="kelasFilter">
+                                            <option value="all">Semua Kelas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="namaFilter">Nama Siswa</label>
+                                        <select class="form-control select2bs43" name="namafilter" id="namaFilter">
+                                            <option value="all">Semua Siswa</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button class="btn bg-navy">
+                                        <i class="fas fa-filter"></i> Filter Data
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <h3>Data Absen Siswa</h3>
+                        <table id="example1" class="table table-bordered table-sm">
+                            <thead class="bg-navy">
+                                <tr>
+                                    <th class="text-center">DATA SISWA</th>
+                                    <th class="text-center">KELAS</th>
+                                    <th class="text-center">MATA PELAJARAN</th>
+                                    <th class="text-center">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="vertical-align: middle;">
+                                        Nama : <br>
+                                        NISN : <br>
+                                        NIS : <br>
+                                        Jenis Kelaim : <br>
+                                        Hp/Telp :
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">KELAS</td>
+                                    <td class="text-center" style="vertical-align: middle;">MATA PELAJARAN</td>
+                                    <td style="vertical-align: middle;">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input custom-control-input-danger" type="radio" id="sakit" name="absensi">
+                                                <label for="sakit" class="custom-control-label">Sakit</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input custom-control-input-danger" type="radio" id="ijin" name="absensi">
+                                                <label for="ijin" class="custom-control-label">Ijin</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input custom-control-input-danger" type="radio" id="alfa" name="absensi">
+                                                <label for="alfa" class="custom-control-label">Alfa</label>
+                                            </div>
+                                            <br>
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="fas fa-window-close"></i>
+                                                Batalkan
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -93,7 +282,7 @@
                 <!-- form start -->
                 <form class="form-horizontal">
                     <div class="form-group row">
-                        <div class="form-group col-4">
+                        <div class="form-group col-3">
                             <label for="tipe-file">Tipe File</label>
                             <select class="form-control" name="tipe" id="tipe-file">
                                 <option value="none">Pilih Tipe File</option>
@@ -109,21 +298,21 @@
                                 <option value="kelas">Kelas</option>
                             </select>
                         </div>
-                        <div class="form-group col-4" id="peserta-didik">
+                        <div class="form-group col-5" id="peserta-didik">
                             <label for="peserta-didik">Nama Peserta Didik</label>
                             <select class="form-control select2bs4" name="peserta-didik" style="width: 100%;">
                                 <option value="none">Pilih Peserta Didik</option>
-                                <option value="1">Seftian <span class="text-danger">(XI DPIB 3)</span></option>
+                                <option value="1">XII KGSP 1 - Seftian</span></option>
                             </select>
                         </div>
-                        <div class="form-group col-4" id="kelas">
+                        <div class="form-group col-5" id="kelas">
                             <label for="kelas">Kelas</label>
                             <select class="form-control select2bs41" name="kelas" style="width: 100%;">
                                 <option value="all">Semua Kelas</option>
                                 <option value="1">XI DPIB 1</option>
                             </select>
                         </div>
-                        <div class="form-group col-4">
+                        <div class="form-group col-5">
                             <label for="tipe-download">Waktu</label>
                             <div class="input-group">
                                 <input type="text" class="form-control float-right" name="waktu" id="reservation">

@@ -1,29 +1,11 @@
-$(document).ready(function(){
-    read()
-
-    // $("#example1").DataTable()
-})
-
-function read() {
-    $.ajax({
-        type: "get",
-        url: "gtk/read",
-        success: function (data) {
-            console.log('load success')
-            $(".loadData").html(data)
-            $('#example1').DataTable().destroy();
-            $('#example1').DataTable();
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    })
-}
+$(function () {
+    $("#example1").DataTable()
+});
 
 function viewimport() {
     $.ajax({
         type: "get",
-        url: "gtk/import-view",
+        url: "tahun-ajaran/import-view",
         success: function (data) {
             console.log('load success')
             $("#import-view").html(data)
@@ -37,14 +19,14 @@ function viewimport() {
 function nonactivepd(id, nama) {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-            confirmButton: "btn btn-success",
+            confirmButton: "btn btn-dark",
             cancelButton: "btn btn-danger"
         },
         buttonsStyling: true
     });
     swalWithBootstrapButtons.fire({
-        title: "Nonaktifkan Guru a.n <span class='text-danger'>" + nama + "</span> ?",
-        text: "Data Guru akan dinonaktifkan !",
+        title: "Nonaktifkan Tahun Ajaran <span class='text-danger'>" + nama + "</span> ?",
+        text: "Data Tahun Ajaran akan dinonaktifkan !",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, Nonaktifkan!",
@@ -54,7 +36,7 @@ function nonactivepd(id, nama) {
         if (result.isConfirmed) {
             swalWithBootstrapButtons.fire({
                 title: "Berhasil!",
-                text: "Guru a.n " + nama + " berhasil dinonaktifkan.",
+                text: "Tahun Ajaran " + nama + " berhasil dinonaktifkan.",
                 icon: "success"
             });
         } else if (

@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class RuangKelas extends Model
 {
-    use HasFactory;
+    protected $table = 'ruangan';
+
+    protected $fillable = [
+        'nama',
+        'description',
+    ];
+
+    public $timestamps = true;
 }

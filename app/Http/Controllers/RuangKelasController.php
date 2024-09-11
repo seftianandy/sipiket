@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\RuangKelas;
 
 class RuangKelasController extends Controller
 {
@@ -11,7 +12,10 @@ class RuangKelasController extends Controller
      */
     public function index()
     {
-        return view('content.ruang-kelas.index');
+        $data = RuangKelas::all();
+        return view('content.ruang-kelas.index')->with([
+            'data' => $data
+        ]);
     }
 
     /**

@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kelas extends Model
+class KelasJurusan extends Model
 {
+    protected $table = 'jurusan';
+
     protected $fillable = [
-        'kelas',
+        'nama',
+        'description',
     ];
 
     public $timestamps = true;

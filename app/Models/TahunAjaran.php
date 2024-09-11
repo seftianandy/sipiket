@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class TahunAjaran extends Model
 {
-    use HasFactory;
+    protected $table = 'tahun_ajaran';
+
+    protected $fillable = [
+        'tahun_ajaran',
+        'description',
+    ];
+
+    public $timestamps = true;
 }

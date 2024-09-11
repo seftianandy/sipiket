@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TahunAjaran;
 
 class TahunAjaranController extends Controller
 {
@@ -11,7 +12,10 @@ class TahunAjaranController extends Controller
      */
     public function index()
     {
-        return view('content.tahun-ajaran.index');
+        $data = TahunAjaran::all();
+        return view('content.tahun-ajaran.index')->with([
+            'data' => $data
+        ]);
     }
 
     /**

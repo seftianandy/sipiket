@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-'pageTitle' => 'Wali Kelas'
+'pageTitle' => 'Anggota Rombel'
 ])
 
 @push('css')
@@ -20,10 +20,23 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
+            <div class="card-body">
+                @foreach ($rombel as $rombels)
+                <span style="font-weight: bold; font-size: 1.2rem;">Romobongan Belajar : <span class="text-primary">{{$rombels->nama}}</span></span>
+                <br>
+                <span>Wali Kelas : {{$rombels->guru->nama}}</span>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
             <div class="card-header" id="imporPdHeader">
-                <button type="button" class="btn btn-md btn-success" data-toggle="modal" data-target="#modal-importwali"
+                <button type="button" class="btn btn-md btn-dark" data-toggle="modal" data-target="#modal-importpd"
                     onclick="viewimport()">
-                    <i class="fas fa-file-import"></i>&nbsp; Import Wali Kelas
+                    <i class="fas fa-plus"></i>&nbsp; Tambah Anggota Rombel
                 </button>
             </div>
             <!-- /.card-header -->
@@ -31,26 +44,28 @@
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">ID</th>
                             <th class="text-center">NAMA</th>
+                            <th class="text-center">NISN</th>
+                            <th class="text-center">NIS</th>
                             <th class="text-center">L/P</th>
-                            <th class="text-center">WALI KELAS</th>
                             <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($anggota_rombel as $anggota)
                         <tr>
-                            <td>ID</td>
-                            <td>NAMA</td>
-                            <td class="text-center">L/P</td>
-                            <td class="text-center">WALI KELAS</td>
+                            <td>{{$anggota->peserta_didik->nama}}</td>
+                            <td class="text-center">{{$anggota->peserta_didik->nisn}}</td>
+                            <td class="text-center">{{$anggota->peserta_didik->nis}}</td>
+                            <td class="text-center">{{$anggota->peserta_didik->jenis_kelamin}}</td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="nonactivepd('1', 'seftian')">
+                                    onclick="nonactivepd(, '')">
                                     <i class="fas fa-times-circle"></i>&nbsp; Nonaktifkan
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -60,12 +75,36 @@
     </div>
 </div>
 
-<!-- Import Data Guru -->
-<div class="modal fade" id="modal-importwali">
+<!-- Detil Peserta Didik -->
+<div class="modal fade" id="modal-detil">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Import Data Wali Kelas</h4>
+                <h4 class="modal-title">Detil Siswa</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="detil-siswa">
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- Import Data Peserta Didik -->
+<div class="modal fade" id="modal-importpd">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Import Data Peserta Didik</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -131,6 +170,18 @@
                 })
             }
 
+            $.ajax({
+                type: 'PUT',
+                url: '/rombongan-belajar/testing/' + 5,
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr(
+                        'content') // Kirim CSRF token untuk keamanan
+                },
+                success: function(data) {
+                    console.log(data)
+                }
+            })
+
             function nonactivepd(id, nama) {
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
@@ -140,8 +191,8 @@
                     buttonsStyling: true
                 });
                 swalWithBootstrapButtons.fire({
-                    title: "Nonaktifkan Wali Kelas a.n <span class='text-danger'>" + nama + "</span> ?",
-                    text: "Data Wali Kelas akan dinonaktifkan !",
+                    title: "Nonaktifkan PD a.n <span class='text-danger'>" + nama + "</span> ?",
+                    text: "Data Peserta Didik akan dinonaktifkan !",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonText: "Yes, Nonaktifkan!",
@@ -151,7 +202,7 @@
                     if (result.isConfirmed) {
                         swalWithBootstrapButtons.fire({
                             title: "Berhasil!",
-                            text: "Wali Kelas a.n " + nama + " berhasil dinonaktifkan.",
+                            text: "Peserta Didik a.n " + nama + " berhasil dinonaktifkan.",
                             icon: "success"
                         });
                     } else if (

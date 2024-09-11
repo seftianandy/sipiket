@@ -11,7 +11,7 @@ class JamPelajaranController extends Controller
      */
     public function index()
     {
-        return view('content.jam-pelajaran.index');
+        // return view('content.jam-pelajaran.index');
     }
 
     /**
@@ -19,7 +19,7 @@ class JamPelajaranController extends Controller
      */
     public function create()
     {
-        return view('content.jam-pelajaran.import');
+        // return view('content.jam-pelajaran.import');
     }
 
     /**

@@ -21,9 +21,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header" id="imporPdHeader">
-                <button type="button" class="btn btn-md btn-success" data-toggle="modal" data-target="#modal-importpd"
+                <button type="button" class="btn btn-md btn-dark" data-toggle="modal" data-target="#modal-importpd"
                     onclick="viewimport()">
-                    <i class="fas fa-file-import"></i>&nbsp; Import PD
+                    <i class="fas fa-file-import"></i>&nbsp; Import Peserta Didik
                 </button>
             </div>
             <!-- /.card-header -->
@@ -33,32 +33,32 @@
                         <tr>
                             <th class="text-center">NAMA</th>
                             <th class="text-center">NISN</th>
+                            <th class="text-center">NIS</th>
                             <th class="text-center">L/P</th>
-                            <th class="text-center">TEMPAT, TANGGAL LAHIR</th>
-                            <th class="text-center">AGAMA</th>
-                            <th class="text-center">KELAS</th>
+                            <th class="text-center">ALAMAT</th>
                             <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($data as $item)
                         <tr>
-                            <td>NAMA</td>
-                            <td class="text-center">NISN</td>
-                            <td class="text-center">L/P</td>
-                            <td>TEMPAT, TANGGAL LAHIR</td>
-                            <td>AGAMA</td>
-                            <td class="text-center">KELAS</td>
+                            <td>{{$item->nama}}</td>
+                            <td class="text-center">{{$item->nisn}}</td>
+                            <td class="text-center">{{$item->nis}}</td>
+                            <td class="text-center">{{$item->jenis_kelamin}}</td>
+                            <td>{{$item->alamat}}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
-                                    data-target="#modal-detil" onclick="detil('1')">
+                                <button type="button" class="btn btn-sm btn-default" data-toggle="modal"
+                                    data-target="#modal-detil" onclick="detil({{$item->id}})">
                                     <i class="fas fa-info-circle"></i>&nbsp; Detil
                                 </button>
                                 <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="nonactivepd('1', 'seftian')">
+                                    onclick="nonactivepd({{$item->id}}, '{{$item->nama}}')">
                                     <i class="fas fa-times-circle"></i>&nbsp; Nonaktifkan
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

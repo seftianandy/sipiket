@@ -21,7 +21,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header" id="imporPdHeader">
-                <button type="button" class="btn btn-md btn-success" data-toggle="modal" data-target="#modal-importruang"
+                <button type="button" class="btn btn-md bg-dark" data-toggle="modal" data-target="#modal-importruang"
                     onclick="viewimport()">
                     <i class="fas fa-file-import"></i>&nbsp; Import Ruang Kelas
                 </button>
@@ -29,22 +29,26 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
-                    <thead>
+                    <thead class="bg-dark">
                         <tr>
+                            <th class="text-center">KODE</th>
                             <th class="text-center">RUANG KELAS</th>
                             <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ( $data as $item )
                         <tr>
-                            <td class="text-center">Ruang Kelas</td>
+                            <td>{{$item->nama}}</td>
+                            <td>{{$item->description}}</td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-danger"
-                                    onclick="hapusRuang('1', 'Ruang 32')">
+                                    onclick="hapusRuang({{$item->id}}, {{$item->description}})">
                                     <i class="fas fa-times-circle"></i>&nbsp; Nonaktifkan
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
